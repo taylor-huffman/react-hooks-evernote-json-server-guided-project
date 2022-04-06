@@ -41,6 +41,13 @@ p.instructions {
   resize: none;
 }
 
+.sort {
+  width: 100%;
+  border: 2px dashed grey;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
 .nav-bar {
   width: 100%;
   background-image: linear-gradient(to right top, #8C33E3, #696CE8, #4A9EEC);

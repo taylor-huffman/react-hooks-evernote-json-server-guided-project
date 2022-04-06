@@ -11,6 +11,7 @@ function NoteContainer() {
   const [noteDetails, setNoteDetails] = useState(null)
   const [editMode, setEditMode] = useState(null)
   const [search, setSearch] = useState('')
+  const [sort, setSort] = useState('sorting off')
 
   useEffect(() => {
     fetch(NOTESURL)
@@ -51,13 +52,42 @@ function NoteContainer() {
     if (!search) return true
     return note.title.toLowerCase().includes(search.toLowerCase())
     || note.body.toLowerCase().includes(search.toLowerCase())
+  }).sort((a, b) => {
+    
+    if (sort === 'sorting off') {
+      return true
+    } else if ( sort === 'sort title a-z') {
+        const titleA = a.title.toUpperCase(); // ignore upper and lowercase
+        const titleB = b.title.toUpperCase(); // ignore upper and lowercase
+        if (titleA < titleB) {
+          return -1;
+        }
+        if (titleA > titleB) {
+          return 1;
+        }
+      
+        // titles must be equal
+        return 0;
+    } else {
+        const titleA = a.title.toUpperCase(); // ignore upper and lowercase
+        const titleB = b.title.toUpperCase(); // ignore upper and lowercase
+        if (titleB < titleA) {
+          return -1;
+        }
+        if (titleB > titleA) {
+          return 1;
+        }
+      
+        // titles must be equal
+        return 0;
+    }
   })
 
   return (
     <>
       <Search search={search} setSearch={setSearch} />
       <div className="container">
-        <Sidebar notes={displayNotes} handleSetNoteDetails={handleSetNoteDetails} NOTESURL={NOTESURL} setNotes={setNotes} />
+        <Sidebar notes={displayNotes} handleSetNoteDetails={handleSetNoteDetails} NOTESURL={NOTESURL} setNotes={setNotes} setSort={setSort} />
         <Content noteDetails={noteDetails} editMode={editMode} setEditMode={setEditMode} handleUpdateNote={handleUpdateNote} />
       </div>
     </>
